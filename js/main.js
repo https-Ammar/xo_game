@@ -66,6 +66,7 @@ const Game = {
   muted: false,
   paused: true,
   roundNumber: 0,
+  maxWins: 3,
   winOptions: new Set(["123", "456", "789", "147", "258", "369", "159", "357"]),
   soundEffects: {
     click: new Audio("../assets/audios/click.mp3"),
@@ -153,10 +154,27 @@ const Game = {
     this.editWinnerScore();
     this.playSound("win");
     this.showConfetti();
-    this.clearGameBox();
-    this.roundNumber++;
-    this.activePlayer = null;
-    updateLocalStorage();
+
+    if (this.activePlayer.score >= this.maxWins) {
+      this.endGame();
+    } else {
+      this.clearGameBox();
+      this.roundNumber++;
+      this.activePlayer = null;
+      updateLocalStorage();
+    }
+  },
+
+  endGame() {
+    document.querySelector("dialog").showModal();
+    document.querySelector(
+      ".winner-name"
+    ).textContent = `${this.activePlayer.name} wins the game!`;
+
+    setTimeout(() => {
+      document.querySelector("dialog").close();
+      this.reset();
+    }, 5000);
   },
 
   async clearGameBox() {
