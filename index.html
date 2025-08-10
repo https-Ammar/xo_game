@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XO Game</title>
+  <link rel="shortcut icon" href="favicon.webp" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/reset.css" type="text/css">
+  <link rel="stylesheet" href="./css/main.css" type="text/css">
+  <link rel="stylesheet" href="./css/fontawesome-v6.css" type="text/css">
+  <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"
+    defer></script>
+  <script src="./js/components/toggle-btn.js"></script>
+  <script src="./js/main.js" defer></script>
+</head>
+
+<body>
+  <dialog id="winDialog">
+    <div class="wrapper">
+      <h2 class="winner-name"></h2>
+      <strong>Winner</strong>
+    </div>
+  </dialog>
+
+  <dialog id="loadingScreen">
+    <div class="wrapper">
+      <div class="loader">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+      </div>
+    </div>
+  </dialog>
+
+  <div class="page-content" hidden>
+    <header>
+      <h1 id="page-logo">XO</h1>
+      <section id="gameControls" class="btn-group">
+        <toggle-button id="pauseSwitch" class="btn btn-glow tip " state="off" aria-label="Start Game">
+          <i class="fa-solid fa-play fa-fw " aria-hidden="true" slot="off"></i>
+          <i class="fa-solid fa-pause fa-fw" aria-hidden="true" slot="on"></i>
+        </toggle-button>
+        <button id="resetBtn" class="btn btn-glow tip" aria-label="Reset Game">
+          <i class="fa-solid fa-undo-alt fa-fw" aria-hidden="true"></i>
+        </button>
+        <toggle-button id="lightSwitch" class="btn btn-glow tip " state="off" aria-label="Turn on lights">
+          <i class="fa-solid fa-sun fa-fw " aria-hidden="true" slot="off"></i>
+          <i class="fa-solid fa-moon fa-fw" aria-hidden="true" slot="on"></i>
+        </toggle-button>
+        <toggle-button id="soundSwitch" state="on" class="btn btn-glow tip " aria-label="Mute">
+          <i class="fa-solid fa-volume-high fa-fw" aria-hidden="true" slot="on"></i>
+          <i class="fa-solid fa-volume-mute fa-fw" aria-hidden="true" slot="off"></i>
+        </toggle-button>
+        <button id="helpBtn" class="btn btn-glow tip" aria-label="Help" popovertarget="gameHelp"
+          popovertargetaction="show" style="anchor-name:--helpAnchor">
+          <i class="fa-solid fa-question fa-fw" aria-hidden="true"></i>
+        </button>
+        <div id="gameHelp" popover role="tooltip">
+          <button class="btn" popovertarget="gameHelp" popovertargetaction="hide">
+            <i class="fa-solid fa-xmark fa-fw" aria-hidden="true"></i>
+          </button>
+          <h3>Objective</h3>
+          <ul>
+            <li>The game is played by two players.</li>
+            <li>The game board consists of a 3x3 grid.</li>
+            <li>The objective is to place three of your marks in a row, either horizontally, vertically, or diagonally.
+            </li>
+          </ul>
+          <br>
+          <h3>Rules</h3>
+          <ul>
+            <li>Each player has only 3 marks (X or O) they can use</li>
+            <li>In the first 3 turns, each player places their marks on any empty cell.</li>
+            <li>Once all 3 marks are placed, players take turns moving one of their existing marks to any empty cell on
+              the board.</li>
+            <li>Players can only move one mark per turn.</li>
+            <li>Players cannot place a mark in the same cell twice in a row.</li>
+          </ul>
+        </div>
+      </section>
+    </header>
+
+    <section class="playground">
+      <div class="gamebox">
+        <div class="bucket" id="bucket1" data-value=""></div>
+        <div class="bucket" id="bucket2" data-value=""></div>
+        <div class="bucket" id="bucket3" data-value=""></div>
+        <div class="bucket" id="bucket4" data-value=""></div>
+        <div class="bucket" id="bucket5" data-value=""></div>
+        <div class="bucket" id="bucket6" data-value=""></div>
+        <div class="bucket" id="bucket7" data-value=""></div>
+        <div class="bucket" id="bucket8" data-value=""></div>
+        <div class="bucket" id="bucket9" data-value=""></div>
+      </div>
+    </section>
+
+    <section class="game-ui">
+      <div iv class="score-board">
+        <article id="player1" class="player p1">
+          <img src="./assets/images/avater01.webp" alt="" width="200" class="player__avater">
+          <span class="player__mark">X</span>
+          <p class="player__name">Player 1</p>
+          <p class="player__score">0</p>
+          <button class="btn btn-glow" title="Edit player1" popovertarget="p1-menu" style="anchor-name:--p1Menu;">
+            <i class="fa-solid fa-user-pen fa-fw" aria-hidden="true"></i>
+          </button>
+          <aside class="player__menu" popover id="p1-menu" role="menu">
+            <form>
+              <button class="avater" type="button" popovertarget="gallary1" aria-label="change avater">
+                <img src="./assets/images/avater01.webp" alt="">
+              </button>
+              <div class="avaters-gallary" popover id="gallary1">
+                <ul class="wrapper">
+                  <li class="gallary__item gallary__item--selected" tabindex="0" role="option" aria-selected="true">
+                    <img src="./assets/images/avater01.webp" alt="" width="60" height="60">
+                  </li>
+                  <li class="gallary__item" tabindex="0" role="option">
+                    <img src="./assets/images/avater02.webp" alt="" width="60" height="60">
+                  </li>
+                  <li class="gallary__item" tabindex="0" role="option">
+                    <img src="./assets/images/avater03.webp" alt="" width="60" height="60">
+                  </li>
+                  <li class="gallary__item " tabindex="0" role="option">
+                    <img src="./assets/images/avater04.webp" alt="" width="60" height="60">
+                  </li>
+                  <li class="gallary__item" tabindex="0" role="option">
+                    <img src="./assets/images/avater05.webp" alt="" width="60" height="60">
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <input type="text" name="name" placeholder="Player Name" aria-label="Player name" value="Player 1"
+                  maxlength="10" minlength="1">
+                <fieldset aria-label="Player color">
+                  <input type="radio" name="color" style="--brand:#FC6262" checked aria-checked="true">
+                  <input type="radio" name="color" style="--brand:#396AEB">
+                  <input type="radio" name="color" style="--brand:#E8E362">
+                  <input type="radio" name="color" style="--brand:#7DE862">
+                  <input type="radio" name="color" style="--brand:#9D62E8">
+                </fieldset>
+              </div>
+            </form>
+            <footer>
+              <button class="cancelBtn" popovertarget="p1-menu" popovertargetaction="hide">Cancel</button>
+              <button class="applyBtn">Apply</button>
+            </footer>
+          </aside>
+        </article>
+
+        <span class="divider">vs</span>
+
+        <article id="player2" class="player p2 player--right ">
+          <img src="./assets/images/avater02.webp" alt="" width="200" class="player__avater">
+          <span class="player__mark">O</span>
+          <p class="player__name">Player 2</p>
+          <p class="player__score">0</p>
+          <button class="btn btn-glow" title="Edit player2" popovertarget="p2-menu" style="anchor-name:--p2Menu;">
+            <i class="fa-solid fa-user-pen fa-fw" aria-hidden="true"></i>
+          </button>
+          <aside class="player__menu" popover id="p2-menu" role="menu">
+            <form>
+              <button class="avater" type="button" popovertarget="gallary2" aria-label="change avater">
+                <img src="./assets/images/avater02.webp" alt="">
+              </button>
+              <div class="avaters-gallary" popover id="gallary2">
+                <ul class="wrapper">
+                  <li class="gallary__item" tabindex="0" role="option">
+                    <img src="./assets/images/avater01.webp" alt="" width="60" height="60">
+                  </li>
+                  <li class="gallary__item gallary__item--selected" tabindex="0" role="option" aria-selected="true">
+                    <img src="./assets/images/avater02.webp" alt="" width="60" height="60">
+                  </li>
+                  <li class="gallary__item" tabindex="0" role="option">
+                    <img src="./assets/images/avater03.webp" alt="" width="60" height="60">
+                  </li>
+                  <li class="gallary__item " tabindex="0" role="option">
+                    <img src="./assets/images/avater04.webp" alt="" width="60" height="60">
+                  </li>
+                  <li class="gallary__item" tabindex="0" role="option">
+                    <img src="./assets/images/avater05.webp" alt="" width="60" height="60">
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <input type="text" name="name" placeholder="Player Name" aria-label="Player name" value="Player 2">
+                <fieldset aria-label="Player color">
+                  <input type="radio" name="color" style="--brand:#FC6262">
+                  <input type="radio" name="color" style="--brand:#396AEB" checked aria-checked="true">
+                  <input type="radio" name="color" style="--brand:#E8E362">
+                  <input type="radio" name="color" style="--brand:#7DE862">
+                  <input type="radio" name="color" style="--brand:#9D62E8">
+                </fieldset>
+              </div>
+            </form>
+            <footer>
+              <button class="cancelBtn" popovertarget="p2-menu" popovertargetaction="hide">Cancel</button>
+              <button class="applyBtn">Apply</button>
+            </footer>
+          </aside>
+        </article>
+      </div>
+    </section>
+  </div>
+</body>
+
+</html>
