@@ -60,6 +60,7 @@ const player2 = {
     },
   },
 };
+//
 
 const Game = {
   activePlayer: null,
