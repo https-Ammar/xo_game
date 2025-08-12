@@ -69,14 +69,30 @@ const Game = {
   maxWins: 3,
   winOptions: new Set(["123", "456", "789", "147", "258", "369", "159", "357"]),
   soundEffects: {
-    click: new Audio("/assets/audios/click.mp3"),
-    uiClick: new Audio("/assets/audios/pause.wav"),
-    switch: new Audio("/assets/audios/switch.wav"),
-    reset: new Audio("/assets/audios/reset.mp3"),
-    unmute: new Audio("/assets/audios/unmute.wav"),
-    popupShow: new Audio("/assets/audios/popup.wav"),
-    tap: new Audio("/assets/audios/tap.wav"),
-    win: new Audio("/assets/audios/win.wav"),
+    click: new Audio(
+      "https://https-ammar.github.io/xo_game/assets/audios/click.mp3"
+    ),
+    uiClick: new Audio(
+      "https://https-ammar.github.io/xo_game/assets/audios/pause.wav"
+    ),
+    switch: new Audio(
+      "https://https-ammar.github.io/xo_game/assets/audios/switch.wav"
+    ),
+    reset: new Audio(
+      "https://https-ammar.github.io/xo_game/assets/audios/reset.mp3"
+    ),
+    unmute: new Audio(
+      "https://https-ammar.github.io/xo_game/assets/audios/unmute.wav"
+    ),
+    popupShow: new Audio(
+      "https://https-ammar.github.io/xo_game/assets/audios/popup.wav"
+    ),
+    tap: new Audio(
+      "https://https-ammar.github.io/xo_game/assets/audios/tap.wav"
+    ),
+    win: new Audio(
+      "https://https-ammar.github.io/xo_game/assets/audios/win.wav"
+    ),
   },
   players: { player1, player2 },
 
